@@ -5,7 +5,7 @@ import zipfile
 
 def prepare_tiny_imagenet(data_dir="dataset/tiny-imagenet-200"):
     url = "http://cs231n.stanford.edu/tiny-imagenet-200.zip"
-    zip_path = os.path.join("data", "tiny-imagenet-200.zip")
+    zip_path = os.path.join("dataset", "tiny-imagenet-200.zip")
 
     if not os.path.exists(data_dir):
         os.makedirs("data", exist_ok=True)
