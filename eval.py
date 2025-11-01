@@ -6,7 +6,6 @@ from utils.training_and_validation import validate
 
 def main():
     model = CustomNet().cuda()
-    model.load_state_dict(torch.load("best_model.pth"))
     model.eval()
 
     _,test_loader = get_tiny_imagenet_loaders()
