@@ -13,9 +13,7 @@ def prepare_tiny_imagenet(data_dir="data/tiny-imagenet-200"):
         with zipfile.ZipFile(zip_path, 'r') as zip_ref:
             zip_ref.extractall("data")
 
-    # reorganize validation set
-    val_dir = os.path.join(data_dir, "val")
-    with open(os.path.join(val_dir, "val_annotations.txt")) as f:
+    with open('tiny-imagenet/tiny-imagenet-200/val/val_annotations.txt') as f:
         for line in f:
             fn, cls, *_ = line.split('\t')
             os.makedirs(f'tiny-imagenet/tiny-imagenet-200/val/{cls}', exist_ok=True)
