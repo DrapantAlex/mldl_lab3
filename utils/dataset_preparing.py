@@ -17,5 +17,5 @@ def prepare_tiny_imagenet(data_dir="dataset/tiny-imagenet-200"):
         for line in f:
             fn, cls, *_ = line.split('\t')
             os.makedirs(f'dataset/tiny-imagenet/tiny-imagenet-200/val/{cls}', exist_ok=True)
-            shutil.copyfile(f'datset/tiny-imagenet/tiny-imagenet-200/val/images/{fn}', f'dataset/tiny-imagenet/tiny-imagenet-200/val/{cls}/{fn}')
+            shutil.copyfile(f'dataset/tiny-imagenet/tiny-imagenet-200/val/images/{fn}', f'dataset/tiny-imagenet/tiny-imagenet-200/val/{cls}/{fn}')
     shutil.rmtree('dataset/tiny-imagenet/tiny-imagenet-200/val/images')
