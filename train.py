@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 from models.custom_net_tiny_imagenet.customnet import CustomNet  # importa la tua rete
-from dataset.tiny_imagenet import get_tiny_imagenet_loaders  # funzione che prepara train_loader e val_loader
+from dataset.tiny_imagenet.dataloader import get_tiny_imagenet_loaders  # funzione che prepara train_loader e val_loader
 from utils import validate, train  # funzione di validazione
 
 
