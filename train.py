@@ -1,24 +1,29 @@
 import torch
+import torch.nn as nn
+from models.custom_net_tiny_imagenet import CustomNet  # importa la tua rete
+from data import get_tiny_imagenet_loaders  # funzione che prepara train_loader e val_loader
+from utils import validate, train  # funzione di validazione
 
-def train(epoch, model, train_loader, criterion, optimizer):
-    model.train()
-    running_loss, correct, total = 0, 0, 0
 
-    for batch_idx, (inputs, targets) in enumerate(train_loader):
-        inputs, targets = inputs.cuda(), targets.cuda()
+def main():
+    train_loader, val_loader = get_tiny_imagenet_loaders()
+    model = CustomNet().cuda()
+    criterion = nn.CrossEntropyLoss()
+    optimizer = torch.optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
 
-        optimizer.zero_grad()
-        outputs = model(inputs)
-        loss = criterion(outputs, targets)
-        loss.backward()
-        optimizer.step()
+    num_epochs = 10
+    best_acc = 0.0
 
-        running_loss += loss.item()
-        _, predicted = outputs.max(1)
-        total += targets.size(0)
-        correct += predicted.eq(targets).sum().item()
+    for epoch in range(1, num_epochs + 1):
+        
+        train(epoch, model, train_loader, criterion, optimizer)
 
-    train_loss = running_loss / len(train_loader)
-    train_acc = 100. * correct / total
-    print(f"Epoch {epoch}: Loss {train_loss:.4f}, Acc {train_acc:.2f}%")
-    return train_loss, train_acc
+        val_accuracy = validate(model, val_loader, criterion)
+        best_acc = max(best_acc, val_accuracy)
+        print(f"Epoch [{epoch}/{num_epochs}] - Val Acc: {val_accuracy:.2f}%")
+
+    print(f"Best validation accuracy: {best_acc:.2f}%")
+    torch.save(model.state_dict(), "best_model.pth")
+
+if __name__ == "__main__":
+    main()

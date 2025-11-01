@@ -1,19 +1,20 @@
 import torch
-def validate(model, val_loader, criterion):
+import torch.nn as nn
+from models.custom_net_tiny_imagenet import CustomNet
+from data import get_tiny_imagenet_loaders  # funzione che prepara train_loader e val_loader
+from utils.training_and_validation import validate
+
+def main():
+    model = CustomNet().cuda()
+    model.load_state_dict(torch.load("best_model.pth"))
     model.eval()
-    val_loss, correct, total = 0, 0, 0
 
-    with torch.no_grad():
-        for inputs, targets in val_loader:
-            inputs, targets = inputs.cuda(), targets.cuda()
-            outputs = model(inputs)
-            loss = criterion(outputs, targets)
-            val_loss += loss.item()
-            _, predicted = outputs.max(1)
-            total += targets.size(0)
-            correct += predicted.eq(targets).sum().item()
+    _,test_loader = get_tiny_imagenet_loaders()
+    criterion = nn.CrossEntropyLoss()
 
-    val_loss /= len(val_loader)
-    val_acc = 100. * correct / total
-    print(f"Validation: Loss {val_loss:.4f}, Acc {val_acc:.2f}%")
-    return val_acc
+    val_acc = validate(model, test_loader, criterion)
+
+    print(f"Test Accuracy: {val_acc:.2f}%")
+
+if __name__ == "__main__":
+    main()
