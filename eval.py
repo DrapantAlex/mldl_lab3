@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from models.custom_net_tiny_imagenet import CustomNet
+from models.custom_net_tiny_imagenet.customnet import CustomNet
 from data import get_tiny_imagenet_loaders  # funzione che prepara train_loader e val_loader
 from utils.training_and_validation import validate
 
