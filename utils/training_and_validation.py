@@ -17,7 +17,7 @@ def validate(model, val_loader, criterion):
     val_loss /= len(val_loader)
     val_acc = 100. * correct / total
     print(f"Validation: Loss {val_loss:.4f}, Acc {val_acc:.2f}%")
-    return val_acc
+    return val_acc, val_loss
 
 def train(epoch, model, train_loader, criterion, optimizer):
     model.train()
