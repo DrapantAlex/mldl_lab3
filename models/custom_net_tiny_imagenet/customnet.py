@@ -8,10 +8,10 @@ class CustomNet(nn.Module):
             nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=2),
             nn.Conv2d(64, 128, kernel_size=3, padding=1),
-            nn.ReLU(),
+            nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=2),
             nn.Conv2d(128, 256, kernel_size=3, padding=1),
-            nn.ReLU(),
+            nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=2),
             nn.AdaptiveAvgPool2d(1)
         )

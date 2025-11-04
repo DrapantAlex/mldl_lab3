@@ -1,4 +1,5 @@
 import torch
+import wandb
 def validate(model, val_loader, criterion):
     model.eval()
     val_loss, correct, total = 0, 0, 0
@@ -39,3 +40,8 @@ def train(epoch, model, train_loader, criterion, optimizer):
     train_loss = running_loss / len(train_loader)
     train_acc = 100. * correct / total
     print(f"Epoch {epoch}: Loss {train_loss:.4f}, Acc {train_acc:.2f}%")
+    wandb.log({
+        "epoch": epoch,
+        "train_loss": train_loss,
+        "train_acc": train_acc
+    })
